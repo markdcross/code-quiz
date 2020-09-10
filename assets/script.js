@@ -11,31 +11,42 @@ const questionEl = document.getElementById('question');
 const answerBtnsEl = document.getElementById('answer-btns');
 let shuffledQuestions;
 let currentQuestionIndex;
+//TODO Add scoring!!
 
-//* START THE GAME
-function startGame() {
+// Starting the quiz and timer
+function startQuiz() {
     startTimer();
     startButton.classList.add('hide');
+
+    // Shuffles the order of the questions
     shuffledQuestions = questions.sort(() => Math.random() - 0.5);
     currentQuestionIndex = 0;
+
+    //shows the question container element
     questionContainerEl.classList.remove('hide');
     setNextQuestion();
 }
 
-//* PLAY THE GAME
+// Clears correct/wrong answer color effect and shows the next question
 function setNextQuestion() {
     resetState();
     showQuestion(shuffledQuestions[currentQuestionIndex]);
 }
 
+// Shows the questions and answers in the correct elements and checks for correct answer
 function showQuestion(question) {
+    // Shows the question value based on the question key within the currently indexed question
     questionEl.innerText = question.question;
+    // Create buttons for each answer
     question.answers.forEach((answer) => {
         const button = document.createElement('button');
         button.innerText = answer.text;
         button.classList.add('btn');
+        // Checks to see if the answer is correct
         if (answer.correct) {
             button.dataset.correct = answer.correct;
+            //TODO Add score++
+            //TODO Add an else below to remove time if answer is wrong
         }
         button.addEventListener('click', selectAnswer);
         answerBtnsEl.appendChild(button);
@@ -51,6 +62,7 @@ function resetState() {
 
 function selectAnswer(event) {
     const selectedButton = event.target;
+    //TODO Adjust color feedback (add transition time and run next question at end of transition?) and eliminate next button (and border)
     const correct = selectedButton.dataset.correct;
     setStatusClass(document.body, correct);
     Array.from(answerBtnsEl.children).forEach((button) => {
@@ -59,6 +71,7 @@ function selectAnswer(event) {
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove('hide');
     } else {
+        //TODO Adjust to transition to datacapture and high score
         startButton.innerText = 'Restart';
         startButton.classList.remove('hide');
     }
@@ -121,22 +134,26 @@ function startTimer() {
 }
 
 //* END THE GAME
+//TODO Adjust to transition to datacapture and high score
+//TODO Add timer trigger to end game
+//
 
-//* DOM functions
-//Removes an element from the document
-function removeElement(elementId) {
-    elementId.remove();
-}
-// Adds an element to the document
-function addElement(parentId, elementTag, elementId, html) {
-    var p = document.getElementById(parentId);
-    var newElement = document.createElement(elementTag);
-    newElement.setAttribute('id', elementId);
-    newElement.innerHTML = html;
-    p.appendChild(newElement);
-}
+// //* DOM functions
+// //Removes an element from the document
+// function removeElement(elementId) {
+//     elementId.remove();
+// }
+// // Adds an element to the document
+// function addElement(parentId, elementTag, elementId, html) {
+//     var p = document.getElementById(parentId);
+//     var newElement = document.createElement(elementTag);
+//     newElement.setAttribute('id', elementId);
+//     newElement.innerHTML = html;
+//     p.appendChild(newElement);
+// }
 
 //* Questions
+// TODO Update questions and shuffle correct answers
 const questions = [
     {
         question: 'First question',
@@ -190,7 +207,7 @@ const questions = [
 ];
 
 //* Event listeners
-startButton.addEventListener('click', startGame);
+startButton.addEventListener('click', startQuiz);
 nextButton.addEventListener('click', () => {
     currentQuestionIndex++;
     setNextQuestion();
