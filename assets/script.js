@@ -5,6 +5,7 @@ let score;
 const highscoreBtn = document.getElementById('highscore-btn');
 const timerDisplay = document.getElementById('timeLeft');
 const startButton = document.getElementById('start-btn');
+const nextButton = document.getElementById('next-btn');
 const questionContainerEl = document.getElementById('question-container');
 const questionEl = document.getElementById('question');
 const answerBtnsEl = document.getElementById('answer-btns');
@@ -13,7 +14,6 @@ let currentQuestionIndex;
 
 //* START THE GAME
 function startGame() {
-    console.log('started');
     startButton.classList.add('hide');
     shuffledQuestions = questions.sort(() => Math.random() - 0.5);
     currentQuestionIndex = 0;
@@ -23,6 +23,7 @@ function startGame() {
 
 //* PLAY THE GAME
 function setNextQuestion() {
+    resetState();
     showQuestion(shuffledQuestions[currentQuestionIndex]);
 }
 
@@ -35,11 +36,46 @@ function showQuestion(question) {
         if (answer.correct) {
             button.dataset.correct = answer.correct;
         }
-        button.addEventListener('click', selectAnswer)
+        button.addEventListener('click', selectAnswer);
+        answerBtnsEl.appendChild(button);
     });
 }
 
-function selectAnswer() {}
+function resetState() {
+    nextButton.classList.add('hide');
+    while (answerBtnsEl.firstChild) {
+        answerBtnsEl.removeChild(answerBtnsEl.firstChild);
+    }
+}
+
+function selectAnswer(event) {
+    const selectedButton = event.target;
+    const correct = selectedButton.dataset.correct;
+    setStatusClass(document.body, correct);
+    Array.from(answerBtnsEl.children).forEach((button) => {
+        setStatusClass(button, button.dataset.correct);
+    });
+    if (shuffledQuestions.length > currentQuestionIndex + 1) {
+        nextButton.classList.remove('hide');
+    } else {
+        startButton.innerText = 'Restart';
+        startButton.classList.remove('hide');
+    }
+}
+
+function setStatusClass(element, correct) {
+    clearStatusClass(element);
+    if (correct) {
+        element.classList.add('correct');
+    } else {
+        element.classList.add('wrong');
+    }
+}
+
+function clearStatusClass(element) {
+    element.classList.remove('correct');
+    element.classList.remove('wrong');
+}
 
 //* TIME THE GAME
 function timer(seconds) {
@@ -154,3 +190,7 @@ const questions = [
 
 //* Event listeners
 startButton.addEventListener('click', startGame);
+nextButton.addEventListener('click', () => {
+    currentQuestionIndex++;
+    setNextQuestion();
+});
