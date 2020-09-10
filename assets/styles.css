@@ -1,3 +1,7 @@
+/* ! * {
+    border: 1px solid black;
+} */
+
 header {
     display: inline-block;
 }
@@ -7,7 +11,7 @@ main {
     justify-content: center;
 }
 
-.highscoreBtn {
+#highscoreBtn {
     margin-top: 2rem;
     margin-left: 4rem;
 }
@@ -17,7 +21,18 @@ main {
     margin-right: 4rem;
 }
 
-.input {
+.answerBtn {
+    margin: 20px;
+}
+
+#titleDiv,
+#introDiv,
+#startDiv {
     margin-top: 2rem;
     justify-content: center;
+    text-align: center;
+}
+
+#answerDiv {
+    display: inline-block;
 }

@@ -17,10 +17,16 @@
         <link rel="stylesheet" href="assets/styles.css" />
     </head>
     <body>
+        <!-- Header row -->
         <header class="row">
-            <button type="button" class="btn btn-outline-dark highscoreBtn">
+            <a
+                href="./highscores.html"
+                type="button"
+                class="btn btn-outline-dark col-md-1"
+                id="highscoreBtn"
+            >
                 View Highscores
-            </button>
+            </a>
             <div class="timer ml-auto">
                 <h4>
                     Time left:
@@ -28,26 +34,34 @@
                 </h4>
             </div>
         </header>
-        <main class="row">
-            <div class="jumbotron jumbotron-fluid">
-                <div class="container">
-                    <h1 class="display-4 col-md-12">
-                        Intro/Questions/Complete-msg
+        <main class="wrapper">
+            <!-- Title/Question/GO div -->
+            <div class="row">
+                <div class="container col-md-10" id="titleDiv">
+                    <h1 id="welcome">Hello! Welcome to the Code Quiz!</h1>
+                </div>
+            </div>
+            <!-- Rules/answers/score div -->
+            <div class="row">
+                <div class="container col-md-10" id="introDiv">
+                    <h1 id="instructions">
+                        This is where the instructions live
                     </h1>
-                    <div class="row">
-                        <p class="lead col-md-12">
-                            This will hold the instructions, then the answer
-                            cards, then the user score
-                        </p>
-                    </div>
+                </div>
+            </div>
+            <!-- Start/popup/input div -->
+            <div class="row">
+                <div class="container col-md-10" id="startDiv">
+                    <button type="button" class="btn btn-danger" id="startBtn">
+                        Start button (replaced by highscore submit)
+                    </button>
                 </div>
             </div>
         </main>
-        <div class="row input">
-            <button type="button" class="btn btn-danger" id="startBtn">
-                Start button (replaced by highscore submit)
-            </button>
-        </div>
+        <hr style="margin-top: 50px" />
+        <footer id=questionTracker>
+            
+        </footer>
         <script src="assets/script.js"></script>
         <script src="assets/questions.js"></script>
     </body>
