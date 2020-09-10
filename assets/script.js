@@ -14,6 +14,7 @@ let currentQuestionIndex;
 
 //* START THE GAME
 function startGame() {
+    startTimer();
     startButton.classList.add('hide');
     shuffledQuestions = questions.sort(() => Math.random() - 0.5);
     currentQuestionIndex = 0;
