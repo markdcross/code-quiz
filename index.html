@@ -23,9 +23,9 @@
                 href="./highscores.html"
                 type="button"
                 class="btn btn-outline-dark col-md-1"
-                id="highscoreBtn"
+                id="highscore-btn"
             >
-                View Highscores
+                View High Scores
             </a>
             <div class="timer ml-auto">
                 <h4>
@@ -34,35 +34,30 @@
                 </h4>
             </div>
         </header>
+
         <main class="wrapper">
-            <!-- Title/Question/GO div -->
-            <div class="row">
-                <div class="container col-md-10" id="titleDiv">
-                    <h1 id="welcome">Hello! Welcome to the Code Quiz!</h1>
-                </div>
-            </div>
             <!-- Rules/answers/score div -->
             <div class="row">
-                <div class="container col-md-10" id="introDiv">
-                    <h1 id="instructions">
-                        This is where the instructions live
-                    </h1>
+                <div class="container col-md-10 hide" id="question-container">
+                    <div id="question">Questions</div>
+                    <div id="answer-btns" class="btn-grid">
+                        <button class="btn">Answer 1</button>
+                        <button class="btn">Answer 2</button>
+                        <button class="btn">Answer 3</button>
+                        <button class="btn">Answer 4</button>
+                    </div>
                 </div>
             </div>
             <!-- Start/popup/input div -->
             <div class="row">
-                <div class="container col-md-10" id="startDiv">
-                    <button type="button" class="btn btn-danger" id="startBtn">
-                        Start button (replaced by highscore submit)
+                <div class="container col-md-10 controls" id="controls">
+                    <button class="btn start-btn" id="start-btn">Start</button>
+                    <button class="btn next-btn hide" id="next-btn">
+                        Next
                     </button>
                 </div>
             </div>
         </main>
-        <hr style="margin-top: 50px" />
-        <footer id=questionTracker>
-            
-        </footer>
         <script src="assets/script.js"></script>
-        <script src="assets/questions.js"></script>
     </body>
 </html>

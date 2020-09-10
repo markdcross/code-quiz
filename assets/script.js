@@ -1,12 +1,47 @@
 //* Timer vars
 let countdown;
-const highscoreBtn = document.getElementById('highscoreBtn');
+let secondsLeft;
+let score;
+const highscoreBtn = document.getElementById('highscore-btn');
 const timerDisplay = document.getElementById('timeLeft');
-const startBtn = document.getElementById('startBtn');
-const welcomeEl = document.getElementById('welcome');
-const instructionsEl = document.getElementById('instructions');
+const startButton = document.getElementById('start-btn');
+const questionContainerEl = document.getElementById('question-container');
+const questionEl = document.getElementById('question');
+const answerBtnsEl = document.getElementById('answer-btns');
+let shuffledQuestions;
+let currentQuestionIndex;
 
-//* Timer functionality
+//* START THE GAME
+function startGame() {
+    console.log('started');
+    startButton.classList.add('hide');
+    shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+    currentQuestionIndex = 0;
+    questionContainerEl.classList.remove('hide');
+    setNextQuestion();
+}
+
+//* PLAY THE GAME
+function setNextQuestion() {
+    showQuestion(shuffledQuestions[currentQuestionIndex]);
+}
+
+function showQuestion(question) {
+    questionEl.innerText = question.question;
+    question.answers.forEach((answer) => {
+        const button = document.createElement('button');
+        button.innerText = answer.text;
+        button.classList.add('btn');
+        if (answer.correct) {
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener('click', selectAnswer)
+    });
+}
+
+function selectAnswer() {}
+
+//* TIME THE GAME
 function timer(seconds) {
     // Clear any existing timers
     clearInterval(countdown);
@@ -16,7 +51,7 @@ function timer(seconds) {
     displayTimeLeft(seconds);
     // Find and display the time left every second
     countdown = setInterval(() => {
-        const secondsLeft = Math.round((then - Date.now()) / 1000);
+        secondsLeft = Math.round((then - Date.now()) / 1000);
         // Check if we should stop it
         if (secondsLeft < 0) {
             clearInterval(countdown);
@@ -26,7 +61,6 @@ function timer(seconds) {
         displayTimeLeft(secondsLeft);
     }, 1000);
 }
-
 // Display the timer
 function displayTimeLeft(seconds) {
     // Set minutes left
@@ -43,19 +77,19 @@ function displayTimeLeft(seconds) {
     timerDisplay.textContent = display;
     console.log(display);
 }
-
 // Use a button to start the timer
 function startTimer() {
     const seconds = 60;
     timer(seconds);
 }
 
+//* END THE GAME
+
 //* DOM functions
 //Removes an element from the document
 function removeElement(elementId) {
     elementId.remove();
 }
-
 // Adds an element to the document
 function addElement(parentId, elementTag, elementId, html) {
     var p = document.getElementById(parentId);
@@ -65,53 +99,58 @@ function addElement(parentId, elementTag, elementId, html) {
     p.appendChild(newElement);
 }
 
-function showProgress() {
-    var currentQuestionNumber = quiz.questionIndex + 1;
-    var element = document.getElementById('progress');
-    element.innerHTML =
-        'Question ' + currentQuestionNumber + ' of ' + quiz.questions.length;
-}
+//* Questions
+const questions = [
+    {
+        question: 'First question',
+        answers: [
+            { text: 'First answer', correct: true },
+            { text: 'Second answer', correct: false },
+            { text: 'Third answer', correct: false },
+            { text: 'Fourth answer', correct: false },
+        ],
+    },
 
-// TODO: Set the content of relevant elements
-var progressBar = '<p>Question x of y</p>';
-var answerA =
-    '<button type="button" class="btn btn-danger answerBtn" id="answerABtn">' +
-    'Answer A' +
-    '</button>';
-var answerB =
-    '<button type="button" class="btn btn-danger answerBtn" id="answerBBtn">' +
-    'Answer B' +
-    '</button>';
-var answerC =
-    '<button type="button" class="btn btn-danger answerBtn" id="answerCBtn">' +
-    'Answer C' +
-    '</button>';
-// TODO: Style all created elements
+    {
+        question: 'Second question',
+        answers: [
+            { text: 'First answer', correct: true },
+            { text: 'Second answer', correct: false },
+            { text: 'Third answer', correct: false },
+            { text: 'Fourth answer', correct: false },
+        ],
+    },
+
+    {
+        question: 'Third question',
+        answers: [
+            { text: 'First answer', correct: true },
+            { text: 'Second answer', correct: false },
+            { text: 'Third answer', correct: false },
+            { text: 'Fourth answer', correct: false },
+        ],
+    },
+
+    {
+        question: 'Fourth question',
+        answers: [
+            { text: 'First answer', correct: true },
+            { text: 'Second answer', correct: false },
+            { text: 'Third answer', correct: false },
+            { text: 'Fourth answer', correct: false },
+        ],
+    },
+
+    {
+        question: 'Fifth question',
+        answers: [
+            { text: 'First answer', correct: true },
+            { text: 'Second answer', correct: false },
+            { text: 'Third answer', correct: false },
+            { text: 'Fourth answer', correct: false },
+        ],
+    },
+];
 
 //* Event listeners
-// TODO: Append all created/removed elements as event listener functions
-startBtn.addEventListener('click', function () {
-    startTimer();
-    removeElement(startBtn);
-    removeElement(welcomeEl);
-    removeElement(instructionsEl);
-    addElement('questionTracker', 'p', 'progress', progressBar);
-    addElement('titleDiv', 'div', 'questionDiv', 'This is the questionDiv');
-    addElement('introDiv', 'div', 'answerDiv', answerA);
-    addElement('introDiv', 'div', 'answerDiv', answerB);
-    addElement('introDiv', 'div', 'answerDiv', answerC);
-    addElement('startDiv', 'div', 'popupDiv', 'This is the popupDiv');
-});
-
-// popupDiv.addEventListener('click', function () {
-//     removeElement(questionDiv);
-//     removeElement(answerDiv);
-//     removeElement(popupDiv);
-// addElement('titleDiv', 'div', 'questionDiv', 'This is the questionDiv');
-// addElement('titleDiv', 'div', 'answerDiv', 'This is the answerDiv');
-// addElement('titleDiv', 'div', 'popupDiv', 'This is the popupDiv');
-// });
-
-// TODO: Create all necessary elements
-const answerDiv = document.createElement('div');
-const popupDiv = document.createElement('div');
+startButton.addEventListener('click', startGame);
