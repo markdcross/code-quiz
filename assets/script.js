@@ -66,14 +66,14 @@ function selectAnswer(event) {
         console.log(this.dataset.correct);
         score += 10;
         // Display "Correct" if answer is correct
-        document.getElementById('controls').innerHTML = '<h1>Correct!</h1>';
+        document.getElementById('controls').innerHTML = '<h3>Correct!</h3>';
 
         setTimeout(function () {
             document.getElementById('controls').innerHTML = '';
         }, 1000);
     } else {
         // Display "Wrong!" if answer is incorrect
-        document.getElementById('controls').innerHTML = '<h1>Wrong!</h1>';
+        document.getElementById('controls').innerHTML = '<h3>Wrong!</h3>';
         setTimeout(function () {
             document.getElementById('controls').innerHTML = '';
         }, 1000);
