@@ -1,7 +1,7 @@
 //* Timer vars
 let countdown;
 let secondsLeft;
-let score;
+let score = 0;
 const highscoreBtn = document.getElementById('highscore-btn');
 const timerDisplay = document.getElementById('timeLeft');
 const startButton = document.getElementById('start-btn');
@@ -11,7 +11,6 @@ const questionEl = document.getElementById('question');
 const answerBtnsEl = document.getElementById('answer-btns');
 let shuffledQuestions;
 let currentQuestionIndex;
-//TODO Add scoring!!
 
 // Starting the quiz and timer
 function startQuiz() {
@@ -45,8 +44,6 @@ function showQuestion(question) {
         // Checks to see if the answer is correct
         if (answer.correct) {
             button.dataset.correct = answer.correct;
-            //TODO Add score++
-            //TODO Add an else below to remove time if answer is wrong
         }
         button.addEventListener('click', selectAnswer);
         answerBtnsEl.appendChild(button);
@@ -68,8 +65,16 @@ function selectAnswer(event) {
     Array.from(answerBtnsEl.children).forEach((button) => {
         setStatusClass(button, button.dataset.correct);
     });
+    if (this.dataset.correct) {
+        console.log(this.dataset.correct);
+        score += 10;
+        console.log(score);
+    } else {
+        console.log(score);
+    }
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
-        nextButton.classList.remove('hide');
+        currentQuestionIndex++;
+        setNextQuestion();
     } else {
         //TODO Adjust to transition to datacapture and high score
         startButton.innerText = 'Restart';
@@ -77,6 +82,9 @@ function selectAnswer(event) {
     }
 }
 
+//TODO Add show correct/incorrect for 1 sec
+//TODO Add score++
+//TODO Add an else below to remove time if answer is wrong
 function setStatusClass(element, correct) {
     clearStatusClass(element);
     if (correct) {
@@ -208,7 +216,7 @@ const questions = [
 
 //* Event listeners
 startButton.addEventListener('click', startQuiz);
-nextButton.addEventListener('click', () => {
-    currentQuestionIndex++;
-    setNextQuestion();
-});
+// nextButton.addEventListener('click', () => {
+//     currentQuestionIndex++;
+//     setNextQuestion();
+// });
