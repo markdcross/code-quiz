@@ -59,18 +59,25 @@ function resetState() {
 
 function selectAnswer(event) {
     const selectedButton = event.target;
-    //TODO Adjust color feedback (add transition time and run next question at end of transition?) and eliminate next button (and border)
+
     const correct = selectedButton.dataset.correct;
-    setStatusClass(document.body, correct);
-    Array.from(answerBtnsEl.children).forEach((button) => {
-        setStatusClass(button, button.dataset.correct);
-    });
+    // Check if answer is correct or incorrect and provides appropriate response
     if (this.dataset.correct) {
         console.log(this.dataset.correct);
         score += 10;
-        console.log(score);
+        // Display "Correct" if answer is correct
+        document.getElementById('controls').innerHTML = 'Correct!';
+
+        setTimeout(function () {
+            document.getElementById('controls').innerHTML = '';
+        }, 1000);
     } else {
-        console.log(score);
+        // Display "Wrong!" if answer is incorrect
+        document.getElementById('controls').innerHTML = 'Wrong!';
+        setTimeout(function () {
+            document.getElementById('controls').innerHTML = '';
+        }, 1000);
+        //TODO Add an else below to remove time if answer is wrong
     }
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         currentQuestionIndex++;
@@ -80,23 +87,6 @@ function selectAnswer(event) {
         startButton.innerText = 'Restart';
         startButton.classList.remove('hide');
     }
-}
-
-//TODO Add show correct/incorrect for 1 sec
-//TODO Add score++
-//TODO Add an else below to remove time if answer is wrong
-function setStatusClass(element, correct) {
-    clearStatusClass(element);
-    if (correct) {
-        element.classList.add('correct');
-    } else {
-        element.classList.add('wrong');
-    }
-}
-
-function clearStatusClass(element) {
-    element.classList.remove('correct');
-    element.classList.remove('wrong');
 }
 
 //* TIME THE GAME
@@ -143,8 +133,8 @@ function startTimer() {
 
 //* END THE GAME
 //TODO Adjust to transition to datacapture and high score
-//TODO Add timer trigger to end game
-//
+//TODO Add timer trigger to end game (if seconds <=0)
+//TODO ***function gameOver () {}, or if else seconds =0 in timer function?
 
 // //* DOM functions
 // //Removes an element from the document
