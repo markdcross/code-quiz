@@ -58,14 +58,6 @@ main {
     color: whitesmoke;
 }
 
-.btn.correct {
-    background-color: green;
-}
-
-.btn.wrong {
-    background-color: red;
-}
-
 .btn-grid {
     display: grid;
     grid-template-columns: repeat(2, auto);
