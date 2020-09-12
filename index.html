@@ -54,6 +54,34 @@
                     <button class="btn start-btn" id="start-btn">Start</button>
                 </div>
             </div>
+            <div class="row">
+                <div class="container col-md-10 hide" id="gameOverEl">
+                    <div id="scoreEl">
+                        <h1>
+                            Well done! You scored
+                            <span id="score"></span> points!
+                        </h1>
+                        <hr />
+                        <h4>Enter your initials below to save your score</h4>
+                        <form class="form-inline">
+                            <div class="form-group mx-sm-3 mb-2">
+                                <label for="initials" class="sr-only"
+                                    >Initials</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="initials"
+                                    placeholder="Initials"
+                                />
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">
+                                Submit Score
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </main>
         <script src="assets/script.js"></script>
     </body>

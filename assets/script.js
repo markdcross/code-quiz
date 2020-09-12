@@ -59,6 +59,9 @@ const startButton = document.getElementById('start-btn');
 const questionContainerEl = document.getElementById('question-container');
 const questionEl = document.getElementById('question');
 const answerBtnsEl = document.getElementById('answer-btns');
+const controlsEl = document.getElementById('controls');
+const gameOverEl = document.getElementById('gameOverEl');
+const scoreDisplay = document.getElementById('score');
 let score = 0;
 let countdown;
 let secondsLeft;
@@ -146,8 +149,8 @@ function selectAnswer(event) {
     } else {
         // If there are no more questions, end the quiz
         //TODO Adjust to transition to datacapture and high score
-        startButton.innerText = 'Restart';
-        startButton.classList.remove('hide');
+        gameOver();
+        scoreDisplay.innerText = score;
     }
 }
 
@@ -199,6 +202,12 @@ function startTimer() {
 }
 
 //* Functions to end the game
+function gameOver() {
+    questionContainerEl.classList.add('hide');
+    controlsEl.classList.add('hide');
+    gameOverEl.classList.remove('hide');
+    clearInterval(countdown);
+}
 //TODO Add timer trigger to end game (if seconds <=0)
 //TODO *** Function gameOver () {}, or if else seconds =0 in timer function?
 
