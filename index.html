@@ -19,14 +19,13 @@
     <body>
         <!-- Header row -->
         <header class="row">
-            <a
-                href="./highscores.html"
+            <button
                 type="button"
                 class="btn btn-outline-dark col-md-1"
                 id="highscore-btn"
             >
                 View High Scores
-            </a>
+            </button>
             <div class="timer ml-auto">
                 <h4>
                     Time left:
@@ -63,7 +62,7 @@
                         </h1>
                         <hr />
                         <h4>Enter your initials below to save your score</h4>
-                        <form class="form-inline">
+                        <form id="initialsForm" class="form-inline">
                             <div class="form-group mx-sm-3 mb-2">
                                 <label for="initials" class="sr-only"
                                     >Initials</label
@@ -80,6 +79,19 @@
                             </button>
                         </form>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container col-md-10 hide" id="highScoresEl">
+                    <h1>HIGH SCORES!</h1>
+                    <ul id="highScoresList"></ul>
+                    <button
+                        type="button"
+                        class="btn btn-outline-dark col-md-6"
+                        id="clear-btn"
+                    >
+                        Clear High Scores
+                    </button>
                 </div>
             </div>
         </main>

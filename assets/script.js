@@ -54,6 +54,7 @@ const questions = [
 
 //* Global vars
 const highscoreBtn = document.getElementById('highscore-btn');
+const clearBtn = document.getElementById('clear-btn');
 const timerDisplay = document.getElementById('timeLeft');
 const startButton = document.getElementById('start-btn');
 const questionContainerEl = document.getElementById('question-container');
@@ -62,6 +63,16 @@ const answerBtnsEl = document.getElementById('answer-btns');
 const controlsEl = document.getElementById('controls');
 const gameOverEl = document.getElementById('gameOverEl');
 const scoreDisplay = document.getElementById('score');
+
+//* Scoring/HighScore
+const mostRecentScore = localStorage.getItem('mostRecentScore');
+const initialsEl = document.getElementById('initials');
+const highScoresEl = document.getElementById('highScoresEl');
+const highScoresList = document.getElementById('highScoresList');
+var storedHighScores = JSON.parse(localStorage.getItem('highScores'));
+const maxHighScores = 5;
+var highScores = [];
+
 let score = 0;
 let countdown;
 let secondsLeft;
@@ -70,6 +81,8 @@ let currentQuestionIndex;
 
 //* Event listeners
 startButton.addEventListener('click', startQuiz);
+highscoreBtn.addEventListener('click', showHighScores);
+clearBtn.addEventListener('click', clearHighScores);
 
 //* Functions to play the game
 // Starting the quiz and timer
@@ -208,17 +221,79 @@ function gameOver() {
     gameOverEl.classList.remove('hide');
     clearInterval(countdown);
 }
+
+//* Local storage
+function showHighScores() {
+    gameOverEl.classList.add('hide');
+    startButton.classList.add('hide');
+    questionContainerEl.classList.add('hide');
+    controlsEl.classList.add('hide');
+    highScoresEl.classList.remove('hide');
+    clearInterval(countdown);
+    renderHighScore();
+}
+
+function init() {
+    // Get stored highscores from localStorage
+    // Parsing the JSON string to an object
+    var storedHighScores = JSON.parse(localStorage.getItem('highScores'));
+
+    // If todos were retrieved from localStorage, update the todos array to it
+    if (storedHighScores !== null) {
+        highScores = storedHighScores;
+    }
+}
+
+function storeHighScore() {
+    // Stringify and set "highscore" key in localStorage to todos array
+    localStorage.setItem('highScores', JSON.stringify(highScores));
+}
+
+function renderHighScore() {
+    // Render a new li for each High Score
+    highScoresList.innerHTML = highScores
+        .map((highScore) => {
+            return `<li>${highScore.initials}: ${highScore.score}</li>`;
+        })
+        .join('');
+}
+
+function clearHighScores() {
+    localStorage.clear();
+    highScoresList.innerHTML = '';
+}
+
+initialsForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    init();
+
+    // Adding high score to array
+    const highscore = {
+        initials: initialsEl.value.trim(),
+        score: score.toString(),
+    };
+    highScores.push(highscore);
+    initialsEl.value = '';
+
+    //ordering high scores and capping at 5
+    highScores.sort((a, b) => b.score - a.score);
+
+    highScores.splice(5);
+    console.log(highScores);
+
+    // Storing scores in local storage and rendering in DOM
+    storeHighScore();
+    renderHighScore();
+
+    gameOverEl.classList.add('hide');
+    highScoresEl.classList.remove('hide');
+});
+
 //TODO Add timer trigger to end game (if seconds <=0)
 //TODO *** Function gameOver () {}, or if else seconds =0 in timer function?
 
 //TODO Adjust to transition to datacapture and high score
-//TODO *** End game on seconds <= 0 or if out of questions
-//TODO *** Remove question and control divs
-//TODO *** Add textbox for score and form for initials
-//TODO *** Connect form to local storage and send to highscore page on submit
-//TODO
-
-//TODO Build highscore page
+//TODO *** End game on seconds <= 0
 
 //* DOM functions
 // //Removes an element from the document
