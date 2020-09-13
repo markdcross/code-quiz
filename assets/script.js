@@ -55,6 +55,7 @@ const questions = [
 //* Global vars
 const highscoreBtn = document.getElementById('highscore-btn');
 const clearBtn = document.getElementById('clear-btn');
+const reloadBtn = document.getElementById('reload-btn');
 const timerDisplay = document.getElementById('timeLeft');
 const startButton = document.getElementById('start-btn');
 const questionContainerEl = document.getElementById('question-container');
@@ -83,6 +84,9 @@ let currentQuestionIndex;
 startButton.addEventListener('click', startQuiz);
 highscoreBtn.addEventListener('click', showHighScores);
 clearBtn.addEventListener('click', clearHighScores);
+reloadBtn.addEventListener('click', function () {
+    location.reload();
+});
 
 //* Functions to play the game
 // Starting the quiz and timer
@@ -230,6 +234,7 @@ function showHighScores() {
     controlsEl.classList.add('hide');
     highScoresEl.classList.remove('hide');
     clearInterval(countdown);
+    init();
     renderHighScore();
 }
 
@@ -252,8 +257,8 @@ function storeHighScore() {
 function renderHighScore() {
     // Render a new li for each High Score
     highScoresList.innerHTML = highScores
-        .map((highScore) => {
-            return `<li>${highScore.initials}: ${highScore.score}</li>`;
+        .map((highScores) => {
+            return `<li>${highScores.initials}: ${highScores.score}</li>`;
         })
         .join('');
 }
