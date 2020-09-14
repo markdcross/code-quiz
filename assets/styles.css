@@ -20,7 +20,8 @@ main {
 }
 
 #question-container,
-#controls {
+#controls,
+#intro {
     margin-top: 2rem;
     justify-content: center;
     text-align: center;

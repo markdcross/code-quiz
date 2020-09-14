@@ -53,6 +53,7 @@ const questions = [
 ];
 
 //* Global vars
+// Taking the quiz
 const highscoreBtn = document.getElementById('highscore-btn');
 const clearBtn = document.getElementById('clear-btn');
 const reloadBtn = document.getElementById('reload-btn');
@@ -62,10 +63,13 @@ const questionContainerEl = document.getElementById('question-container');
 const questionEl = document.getElementById('question');
 const answerBtnsEl = document.getElementById('answer-btns');
 const controlsEl = document.getElementById('controls');
+const introEl = document.getElementById('intro');
 const gameOverEl = document.getElementById('gameOverEl');
 const scoreDisplay = document.getElementById('score');
+let shuffledQuestions;
+let currentQuestionIndex;
 
-//* Scoring/HighScore
+// Scoring/HighScore
 const mostRecentScore = localStorage.getItem('mostRecentScore');
 const initialsEl = document.getElementById('initials');
 const highScoresEl = document.getElementById('highScoresEl');
@@ -73,12 +77,14 @@ const highScoresList = document.getElementById('highScoresList');
 var storedHighScores = JSON.parse(localStorage.getItem('highScores'));
 const maxHighScores = 5;
 var highScores = [];
-
 let score = 0;
+
+// Timer
+const now = Date.now();
+let seconds = 60;
+let then = now + seconds * 1000;
 let countdown;
 let secondsLeft;
-let shuffledQuestions;
-let currentQuestionIndex;
 
 //* Event listeners
 startButton.addEventListener('click', startQuiz);
@@ -93,17 +99,19 @@ reloadBtn.addEventListener('click', function () {
 function startQuiz() {
     startTimer();
     startButton.classList.add('hide');
+    introEl.classList.add('hide');
 
     // Shuffles the order of the questions
     shuffledQuestions = questions.sort(() => Math.random() - 0.5);
     currentQuestionIndex = 0;
     //shows the question container element
-
     questionContainerEl.classList.remove('hide');
+
+    // Displays first question
     setNextQuestion();
 }
 
-// Clears correct/wrong answer color effect and shows the next question
+// Clears the answer boxes and shows the next question
 function setNextQuestion() {
     resetState();
     showQuestion(shuffledQuestions[currentQuestionIndex]);
@@ -129,13 +137,16 @@ function showQuestion(question) {
     });
 }
 
+// Clears the answer boxes
 function resetState() {
     while (answerBtnsEl.firstChild) {
         answerBtnsEl.removeChild(answerBtnsEl.firstChild);
     }
 }
 
+// Selecting your answer
 function selectAnswer(event) {
+    // Identifies which answer is selected
     const selectedButton = event.target;
     const correct = selectedButton.dataset.correct;
 
@@ -149,13 +160,16 @@ function selectAnswer(event) {
             document.getElementById('controls').innerHTML = '';
         }, 1000);
     } else {
+        // Reduce timer by 10 seconds
+        then -= 10000;
+        displayTimeLeft(secondsLeft);
+
         // Display "Wrong!" for 1 sec if answer is incorrect
         document.getElementById('controls').innerHTML = '<h3>Wrong!</h3>';
 
         setTimeout(function () {
             document.getElementById('controls').innerHTML = '';
         }, 1000);
-        //TODO Remove time if answer is wrong
     }
 
     // Check to see if there are more questions.
@@ -165,9 +179,7 @@ function selectAnswer(event) {
         setNextQuestion();
     } else {
         // If there are no more questions, end the quiz
-        //TODO Adjust to transition to datacapture and high score
         gameOver();
-        scoreDisplay.innerText = score;
     }
 }
 
@@ -176,22 +188,20 @@ function timer(seconds) {
     // Clear any existing timers
     clearInterval(countdown);
 
-    // Current time stamp in milliseconds
-    const now = Date.now();
-    const then = now + seconds * 1000;
+    // First display of time (before interval begins)
     displayTimeLeft(seconds);
 
     // Find and display the time left every second
     countdown = setInterval(() => {
         secondsLeft = Math.round((then - Date.now()) / 1000);
-
         // Check if we should stop it
         if (secondsLeft < 0) {
             clearInterval(countdown);
+            gameOver();
+            displayTimeLeft('');
             return;
         }
         // Display it
-
         displayTimeLeft(secondsLeft);
     }, 1000);
 }
@@ -210,11 +220,10 @@ function displayTimeLeft(seconds) {
     document.title = display;
     // Displays the timer
     timerDisplay.textContent = display;
-    console.log(display);
 }
+
 // Use a button to start the timer
 function startTimer() {
-    const seconds = 60;
     timer(seconds);
 }
 
@@ -223,6 +232,7 @@ function gameOver() {
     questionContainerEl.classList.add('hide');
     controlsEl.classList.add('hide');
     gameOverEl.classList.remove('hide');
+    scoreDisplay.innerText = score;
     clearInterval(countdown);
 }
 
@@ -233,6 +243,8 @@ function showHighScores() {
     questionContainerEl.classList.add('hide');
     controlsEl.classList.add('hide');
     highScoresEl.classList.remove('hide');
+    introEl.classList.add('hide');
+
     clearInterval(countdown);
     init();
     renderHighScore();
@@ -293,23 +305,3 @@ initialsForm.addEventListener('submit', function (event) {
     gameOverEl.classList.add('hide');
     highScoresEl.classList.remove('hide');
 });
-
-//TODO Add timer trigger to end game (if seconds <=0)
-//TODO *** Function gameOver () {}, or if else seconds =0 in timer function?
-
-//TODO Adjust to transition to datacapture and high score
-//TODO *** End game on seconds <= 0
-
-//* DOM functions
-// //Removes an element from the document
-// function removeElement(elementId) {
-//     elementId.remove();
-// }
-// // Adds an element to the document
-// function addElement(parentId, elementTag, elementId, html) {
-//     var p = document.getElementById(parentId);
-//     var newElement = document.createElement(elementTag);
-//     newElement.setAttribute('id', elementId);
-//     newElement.innerHTML = html;
-//     p.appendChild(newElement);
-// }
