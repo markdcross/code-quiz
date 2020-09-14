@@ -67,8 +67,8 @@ main {
 
 .btn-grid {
     display: grid;
-    grid-template-columns: repeat(2, auto);
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
 }
 
 .btn-grid .btn {
@@ -105,9 +105,6 @@ main {
 }
 
 @media only screen and (max-width: 600px) {
-    body {
-        background-color: lightblue;
-    }
     .container {
         width: 800px;
         max-width: 100%;

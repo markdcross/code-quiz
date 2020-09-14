@@ -2,52 +2,77 @@
 // TODO Update questions and shuffle correct answers
 const questions = [
     {
-        question: 'First question',
+        question: 'What is the purpose of an array?',
         answers: [
-            { text: 'First answer', correct: true },
-            { text: 'Second answer', correct: false },
-            { text: 'Third answer', correct: false },
-            { text: 'Fourth answer', correct: false },
+            { text: 'To store data in an organized fashion', correct: true },
+            { text: 'To organize data into key-value pairs', correct: false },
+            {
+                text: 'To organize data into lettered positions',
+                correct: false,
+            },
+            { text: 'To make developers cry', correct: false },
         ],
     },
 
     {
-        question: 'Second question',
+        question:
+            'Which of the methods below does NOT change the array it is called on?',
         answers: [
-            { text: 'First answer', correct: true },
-            { text: 'Second answer', correct: false },
-            { text: 'Third answer', correct: false },
-            { text: 'Fourth answer', correct: false },
+            { text: '.push()', correct: false },
+            { text: '.shift()', correct: false },
+            { text: '.slice()', correct: true },
+            { text: '.pop()', correct: false },
         ],
     },
 
     {
-        question: 'Third question',
+        question: 'Which statement is true about for loops?',
         answers: [
-            { text: 'First answer', correct: true },
-            { text: 'Second answer', correct: false },
-            { text: 'Third answer', correct: false },
-            { text: 'Fourth answer', correct: false },
+            {
+                text: 'for loops always run an unknown number of times',
+                correct: false,
+            },
+            { text: 'for loops always count from 0 upwards', correct: false },
+            {
+                text:
+                    'for loops are appropriate when looping a predetermined number of times',
+                correct: true,
+            },
+            {
+                text: 'for loops can never result in an infinite loop',
+                correct: false,
+            },
         ],
     },
 
     {
-        question: 'Fourth question',
+        question: 'What is the purpose of a parameter?',
         answers: [
-            { text: 'First answer', correct: true },
-            { text: 'Second answer', correct: false },
-            { text: 'Third answer', correct: false },
-            { text: 'Fourth answer', correct: false },
+            {
+                text: 'To specify actual values passed into a funciton',
+                correct: false,
+            },
+            { text: 'What is a parameter?', correct: false },
+            { text: 'To call a function', correct: false },
+            { text: 'To alow a function to accept data', correct: true },
         ],
     },
 
     {
-        question: 'Fifth question',
+        question:
+            'Which of the following best describes what a function in JavaScript is used for?',
         answers: [
-            { text: 'First answer', correct: true },
-            { text: 'Second answer', correct: false },
-            { text: 'Third answer', correct: false },
-            { text: 'Fourth answer', correct: false },
+            { text: 'A function creates new variables', correct: false },
+            {
+                text:
+                    'A function is a reusable piece of code that can accept input and performs a specific task',
+                correct: true,
+            },
+            { text: 'A function stores data', correct: false },
+            {
+                text: 'A function allows for the use of mathematical operators',
+                correct: false,
+            },
         ],
     },
 ];
@@ -143,6 +168,26 @@ function resetState() {
         answerBtnsEl.removeChild(answerBtnsEl.firstChild);
     }
 }
+function correctAnswer() {
+    score += 10;
+    controlsEl.innerHTML = '<h3>Correct!</h3>';
+
+    setTimeout(function () {
+        controlsEl.innerHTML = '';
+    }, 1000);
+}
+
+function wrongAnswer() {
+    // Reduce timer by 10 seconds
+    then -= 10000;
+    displayTimeLeft(secondsLeft);
+    // Display "Wrong!" for 1 sec if answer is incorrect
+    controlsEl.innerHTML = '<h3>Wrong!</h3>';
+
+    setTimeout(function () {
+        controlsEl.innerHTML = '';
+    }, 1000);
+}
 
 // Selecting your answer
 function selectAnswer(event) {
@@ -152,24 +197,10 @@ function selectAnswer(event) {
 
     // Check if answer is correct or incorrect and provides appropriate response
     if (correct) {
-        score += 10;
         // Display "Correct" for 1 sec if answer is correct
-        document.getElementById('controls').innerHTML = '<h3>Correct!</h3>';
-
-        setTimeout(function () {
-            document.getElementById('controls').innerHTML = '';
-        }, 1000);
+        correctAnswer();
     } else {
-        // Reduce timer by 10 seconds
-        then -= 10000;
-        displayTimeLeft(secondsLeft);
-
-        // Display "Wrong!" for 1 sec if answer is incorrect
-        document.getElementById('controls').innerHTML = '<h3>Wrong!</h3>';
-
-        setTimeout(function () {
-            document.getElementById('controls').innerHTML = '';
-        }, 1000);
+        wrongAnswer();
     }
 
     // Check to see if there are more questions.
@@ -296,7 +327,6 @@ initialsForm.addEventListener('submit', function (event) {
     highScores.sort((a, b) => b.score - a.score);
 
     highScores.splice(5);
-    console.log(highScores);
 
     // Storing scores in local storage and rendering in DOM
     storeHighScore();
