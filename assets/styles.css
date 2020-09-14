@@ -96,8 +96,6 @@ main {
     max-width: 25%;
 }
 
-
-
 .form-inline {
     margin-top: 2rem;
 }
@@ -114,5 +112,9 @@ main {
         padding: 2rem;
         border-radius: 15px;
         box-shadow: 0 0 10px 2px;
+    }
+    #question {
+        margin-bottom: 2rem;
+        font-size: 1.5rem;
     }
 }
