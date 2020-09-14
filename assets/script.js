@@ -168,25 +168,43 @@ function resetState() {
         answerBtnsEl.removeChild(answerBtnsEl.firstChild);
     }
 }
+
 function correctAnswer() {
+    // Add 10 to score
     score += 10;
+    // Display "Correct!" and change background color of element for 1 sec
     controlsEl.innerHTML = '<h3>Correct!</h3>';
+    controlsEl.style.backgroundColor = 'green';
 
     setTimeout(function () {
         controlsEl.innerHTML = '';
+        controlsEl.style.backgroundColor = '';
     }, 1000);
+    cheerSound();
 }
 
 function wrongAnswer() {
     // Reduce timer by 10 seconds
     then -= 10000;
     displayTimeLeft(secondsLeft);
-    // Display "Wrong!" for 1 sec if answer is incorrect
+    // Display "Wrong!"  and change background color of element for 1 sec
     controlsEl.innerHTML = '<h3>Wrong!</h3>';
-
+    controlsEl.style.backgroundColor = 'red';
     setTimeout(function () {
         controlsEl.innerHTML = '';
+        controlsEl.style.backgroundColor = '';
     }, 1000);
+    booSound();
+}
+
+function cheerSound() {
+    var cheer = document.getElementById('cheer');
+    cheer.play();
+}
+
+function booSound() {
+    var boo = document.getElementById('boo');
+    boo.play();
 }
 
 // Selecting your answer
