@@ -105,11 +105,8 @@ var highScores = [];
 let score = 0;
 
 // Timer
-const now = Date.now();
-let seconds = 60;
-let then = now + seconds * 1000;
-let countdown;
-let secondsLeft;
+var counter = 60;
+var interval;
 
 //* Event listeners
 startButton.addEventListener('click', startQuiz);
@@ -185,8 +182,7 @@ function correctAnswer() {
 
 function wrongAnswer() {
     // Reduce timer by 10 seconds
-    then -= 10000;
-    displayTimeLeft(secondsLeft);
+    counter -= 10;
     // Display "Wrong!"  and change background color of element for 1 sec
     controlsEl.innerHTML = '<h3>Wrong!</h3>';
     controlsEl.style.backgroundColor = 'red';
@@ -233,47 +229,17 @@ function selectAnswer(event) {
 }
 
 //* Timer
-function timer(seconds) {
-    // Clear any existing timers
-    clearInterval(countdown);
-
-    // First display of time (before interval begins)
-    displayTimeLeft(seconds);
-
-    // Find and display the time left every second
-    countdown = setInterval(() => {
-        secondsLeft = Math.round((then - Date.now()) / 1000);
-        // Check if we should stop it
-        if (secondsLeft < 0) {
-            clearInterval(countdown);
-            gameOver();
-            displayTimeLeft('');
-            return;
-        }
-        // Display it
-        displayTimeLeft(secondsLeft);
-    }, 1000);
-}
-
-// Display the timer
-function displayTimeLeft(seconds) {
-    // Set minutes left
-    const minutes = Math.floor(seconds / 60);
-    // Set seconds left in the minute
-    const remainderSeconds = seconds % 60;
-    // Display
-    const display = `${minutes}:${
-        remainderSeconds < 10 ? '0' : ''
-    }${remainderSeconds}`;
-    // Adds the timer as the page title (in tab)
-    document.title = display;
-    // Displays the timer
-    timerDisplay.textContent = display;
-}
-
-// Use a button to start the timer
 function startTimer() {
-    timer(seconds);
+    interval = setInterval(function () {
+        counter--;
+        if (counter >= 0) {
+            timerDisplay.innerHTML = counter;
+        }
+        if (counter <= 0) {
+            clearInterval(interval);
+            gameOver();
+        }
+    }, 1000);
 }
 
 //* Functions to end the game
@@ -282,7 +248,7 @@ function gameOver() {
     controlsEl.classList.add('hide');
     gameOverEl.classList.remove('hide');
     scoreDisplay.innerText = score;
-    clearInterval(countdown);
+    clearInterval(interval);
 }
 
 //* Local storage
@@ -293,8 +259,7 @@ function showHighScores() {
     controlsEl.classList.add('hide');
     highScoresEl.classList.remove('hide');
     introEl.classList.add('hide');
-
-    clearInterval(countdown);
+    clearInterval(interval);
     init();
     renderHighScore();
 }
