@@ -27,6 +27,9 @@ Play around with it! I'll add more questions soon, but this showcases the core f
 ![gameover](assets/img/gameover.png)
 ![highscore](assets/img/highscores.png)
 
+# Contact
+Feel free to reach out to me via [GitHub](https://github.com/markdcross "Visit Mark's GitHub"), [LinkedIn](https://www.linkedin.com/in/markdcross/ "Visit Mark's LinkedIn"), or [Email](mailto:markdcross@gmail.com)
+
 # License
 MIT License
 
