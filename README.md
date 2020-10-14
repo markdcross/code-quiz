@@ -6,7 +6,7 @@ This short code quiz was created with HTML, CSS, and vanilla JS. The idea is sim
 [Check out the deployed app here!](https://markdcross.github.io/code-quiz/)
 
 
-# Techniques/skills
+# Technology/skills
 
 This entire quiz lives in one HTML doc. I use DOM manipulation via events and event listeners to create, show, and hide divs and content based on the next step in the quiz logic. The questions and answers live within an array that is randomized each time the quiz is taken. If a question is answered correctly, a "correct" message appears, colors change, and a sound is played. The same occurs for an incorrect answer, though each effect is different.
 
@@ -14,6 +14,7 @@ This entire quiz lives in one HTML doc. I use DOM manipulation via events and ev
 * CSS
 * JavaScript
 * Intervals
+* Local storage
 
 # Usage
 
@@ -28,7 +29,7 @@ Play around with it! I'll add more questions soon, but this showcases the core f
 ![highscore](assets/img/highscores.png)
 
 # Contact
-Feel free to reach out to me via [GitHub](https://github.com/markdcross "Visit Mark's GitHub"), [LinkedIn](https://www.linkedin.com/in/markdcross/ "Visit Mark's LinkedIn"), or [Email](mailto:markdcross@gmail.com)
+Please reach out to me with any questions or feedback via [GitHub](https://github.com/markdcross "Visit Mark's GitHub"), [LinkedIn](https://www.linkedin.com/in/markdcross/ "Visit Mark's LinkedIn"), or [Email](mailto:markdcross@gmail.com)
 
 # License
 MIT License
