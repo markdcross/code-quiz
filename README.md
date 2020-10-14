@@ -1,3 +1,4 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 # Welcome to my Code Quiz
 
 This short code quiz was created with HTML, CSS, and vanilla JS. The idea is simple - answer the questions before your time runs out. Every correct answer awards you 10 points, while every incorrect answer reduces your timer by 10 seconds. At the end of the quiz, you have the opportunity to save your score to a high scores list (via local storage). The questions cover JavaScript topics such as variables and arrays. The styling is simple but clean, and I recommend taking the quiz with your sound on.
